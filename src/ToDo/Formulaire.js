@@ -9,10 +9,13 @@ export class Formulaire extends React.Component {
       };
     }
     
+    // Pour gérer la saisie dans la barre de saisie
     onChange(event) {
       this.setState({userInput: event.target.value});
     }
 
+
+    // Pour gérer le clique sur le bouton
     onClick(event) {
       event.preventDefault();
       this.setState({
@@ -21,9 +24,13 @@ export class Formulaire extends React.Component {
       });
     }
 
+    // Pour afficher les résultats. Je pense qu'il faut faire avec "map" mais je ne s
     liste() {
       return (
-        this.state.items.map( ???? )
+        <div>
+          this.state.items.map( ???? )
+          <button>X</button>
+          </div>      
       )
     }
 
