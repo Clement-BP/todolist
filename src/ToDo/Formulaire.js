@@ -5,8 +5,13 @@ export class Formulaire extends React.Component {
       super(props);
       this.state = {
         userInput:'',
-        items: []
+        items: [],
+        isChecked: { checked: false }
       };
+      this.onChange = this.onChange.bind(this);
+      this.onClick = this.onClick.bind(this);
+      this.removeItem = this.removeItem.bind(this);
+      this.handleCheckboxChange = this.handleCheckboxChange.bind(this)
     }
     
     // Pour gérer la saisie dans la barre de saisie
@@ -24,14 +29,36 @@ export class Formulaire extends React.Component {
       });
     }
 
-    // Pour afficher les résultats. Je pense qu'il faut faire avec "map" mais je ne s
+     // Pour retirer un item
+     removeItem(event) {
+      event.preventDefault();
+      const itemsbis = this.state.items;
+      const index = itemsbis.indexOf(event.target.value);
+      itemsbis.splice(index, 1);
+      this.setState({
+        items: itemsbis
+      });
+    }
+
+    // Pour la checkbox
+    handleCheckboxChange(event) {
+      this.setState({ isChecked: event.target.checked })
+    }
+
+    // Pour afficher les résultats.
     liste() {
-      return (
-        <div>
-          this.state.items.map( ???? )
-          <button>X</button>
+      return this.state.items.map((item) => {
+        return (
+        <div key={item} style={{backgroundColor: !this.state.isChecked ? "white" : "green"}}>
+          <input 
+            type="checkbox"
+            checked={this.state.checked}
+            onChange={this.handleCheckboxChange}/>  
+          {item}
+          <button onClick={this.removeItem}>X</button>
           </div>      
-      )
+        );
+      });
     }
 
     render() {
@@ -40,16 +67,20 @@ export class Formulaire extends React.Component {
             <h1 className="App-header">Ma To Do List</h1>          
             <form>
               <input 
-                onChange={this.onChange.bind(this)}
+                onChange={this.onChange}
                 value={this.state.userInput} 
                 type="text" 
                 placeholder="Compléter la ToDoList">
               </input>
               <button 
-                onClick={this.onClick.bind(this)} 
+                onClick={this.onClick} 
                 type="submit">Envoyer</button>
             </form>
+            <div>{this.liste()}</div>
         </div>
       );
     }
   }
+
+
+  
